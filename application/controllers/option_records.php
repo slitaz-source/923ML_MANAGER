@@ -21,7 +21,7 @@ class Option_records extends CI_Controller {
 		$config ['total_rows'] = intval ( $tmp ['num'] );
 		$config ['per_page'] = 50;
 		$this->pagination->initialize ( $config );
-		$this->db->query ( "set names 'binary'" );
+		//$this->db->query ( "set names 'binary'" );
 		$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log ORDER BY op_time DESC limit 50";
 		$data ['data'] = $this->db->query ( $sql )->result_array ();
 		// foreach ($data ['data'] as &$val){
@@ -52,12 +52,12 @@ class Option_records extends CI_Controller {
 			
 			$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
 			if ($data ['page'] == 1) {
-				$this->db->query ( "set names 'binary'" );
+				//$this->db->query ( "set names 'binary'" );
 				$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log ORDER BY op_time DESC limit 50";
 				$data ['page_data'] = $this->pagination->create_links ();
 				$this->load->view ( 'option', $data );
 			} else {
-				$this->db->query ( "set names 'binary'" );
+				//$this->db->query ( "set names 'binary'" );
 				$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log ORDER BY op_time DESC limit {$data['page']},50";
 				$data ['data'] = $this->db->query ( $sql )->result_array ();
 				$data ['page_data'] = $this->pagination->create_links ();
@@ -90,7 +90,7 @@ class Option_records extends CI_Controller {
 						'search_option_type' => 'cdkey' 
 				) );
 				$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
-				$this->db->query ( "set names 'binary'" );
+				//$this->db->query ( "set names 'binary'" );
 				$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log WHERE cdkey regexp '{$_POST['search']}' ORDER BY op_time DESC ";
 				$data ['data'] = $this->db->query ( $sql )->result_array ();
 				$data ['page_data'] = $this->pagination->create_links ();
@@ -106,13 +106,13 @@ class Option_records extends CI_Controller {
 				
 				$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
 				if ($data ['page'] == 1) {
-					$this->db->query ( "set names 'binary'" );
+					//$this->db->query ( "set names 'binary'" );
 					$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log ORDER BY op_time DESC limit 50";
 					$data ['data'] = $this->db->query ( $sql )->result_array ();
 					$data ['page_data'] = $this->pagination->create_links ();
 					$this->load->view ( 'option', $data );
 				} else {
-					$this->db->query ( "set names 'binary'" );
+					//$this->db->query ( "set names 'binary'" );
 					$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log ORDER BY op_time DESC limit {$data['page']},50";
 					$data ['data'] = $this->db->query ( $sql )->result_array ();
 					$data ['page_data'] = $this->pagination->create_links ();
