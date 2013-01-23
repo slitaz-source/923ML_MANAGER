@@ -90,6 +90,20 @@ form {
 </head>
 
 <body>
+<?php $type=isset($type) ? $type : ''?>
+<form
+		action="http://www.923ml.com/pay_init/admin/index.php/order_records/search_page"
+		method="post" style="text-align: center">
+		<select name="type">
+			<option value='cdkey' <?echo @$type=='cdkey'?'selected':''; ?>>帐号</option>
+			<option value='order_id' <?echo @$type=='order_id'?'selected':''; ?>>订单号</option>
+			<option value='money' <?echo @$type=='money'?'selected':''; ?>>金额</option>
+			<option value='complate' <?echo @$type=='complate'?'selected':''; ?>>完成订单</option>
+			<option value='moon' <?echo @$type=='moon'?'selected':''; ?>>按月查询</option>
+		</select> <input type="text" name="search" /><br /> <input
+			type="submit" value="提交" />
+
+	</form>
 	<div id="container">
 		<div align="center"><?= $page_data ?></div>
 
@@ -98,8 +112,9 @@ form {
 
 
 			<!-- all you need with Tablecloth is a regular, well formed table. No need for id's, class names... -->
-
-
+			<?php if(isset($moon_all)){?>
+			<a><?php echo $date_cn.'营业额为'.$moon_all.'元'?></a>
+			<?php }?>
 			<table cellspacing="0" cellpadding="0">
 				<tr>
 					<th>帐号</th>

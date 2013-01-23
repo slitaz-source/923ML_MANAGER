@@ -1,5 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+$config['login_user']='admin';
+$config['login_passwd']='adminmanager';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -224,7 +225,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '95f0ddcde1B5249f3043F813434CA86c';
 
 /*
 |--------------------------------------------------------------------------
