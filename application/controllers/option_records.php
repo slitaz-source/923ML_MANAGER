@@ -121,4 +121,15 @@ class Option_records extends CI_Controller {
 			}
 		}
 	}
+	
+	public function binary(){
+		$sql="set names 'utf8'";
+		$this->db->query ( $sql );
+		$sql = "SELECT cdkey,`point`,event,memo,FROM_UNIXTIME(op_time) as time FROM user_point_log limit 100";
+		$rs=$this->db->query ( $sql )->result_array ();
+// 		foreach ($rs as &$v){
+// 			$v['memo']=iconv('GBK','UTF8',$v['memo']);
+// 		}
+		var_dump($rs);
+	}
 }

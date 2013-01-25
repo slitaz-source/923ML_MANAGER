@@ -99,7 +99,7 @@ class Order_records extends CI_Controller {
 					'search_type' => $_POST ['type'] 
 			) );
 		}
-		if ((! isset ( $_POST ['search'] ) || (empty ( $_POST ['search'] ))) && $this->session->userdata ( 'search_type' ) != 'complate') {
+		if ((! isset ( $_POST ['search'] ) || (empty ( $_POST ['search'] ))) && $this->session->userdata ( 'search_type' ) != 'complate' && $this->session->userdata ( 'search_type' ) != 'error') {
 			$_POST ['type'] = 'all';
 		}
 		
@@ -156,6 +156,30 @@ class Order_records extends CI_Controller {
 			) );
 			$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
 			$sql = "SELECT cdkey,order_id,money,`status`,FROM_UNIXTIME(create_time) as time FROM pay_log where money = '{$_POST['search']}' ORDER BY create_time DESC";
+			$data ['data'] = $this->db->query ( $sql )->result_array ();
+			$data ['page_data'] = $this->pagination->create_links ();
+			$this->load->view ( 'search_records', $data );
+		} elseif ($data ['type'] == 'error' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'error')) {
+			$this->load->library ( 'pagination' );
+			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$sql_conut = "SELECT COUNT(id) as num FROM pay_log";
+			$tmp = $this->db->query ( $sql_conut )->row_array ();
+			$config ['total_rows'] = intval ( $tmp ['num'] );
+			$config ['per_page'] = intval ( $tmp ['num'] );
+			$this->pagination->initialize ( $config );
+			$this->session->set_userdata ( array (
+					'search_type' => 'error' 
+			) );
+			$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
+			
+			$sql ="SELECT GROUP_CONCAT(id) as num FROM pay_log GROUP BY order_id having count(order_id) > 2";
+			$id_arr=$this->db->query ( $sql )->result_array ();
+			$id_all='-1';
+			foreach ($id_arr as $val){
+				$id_all.=','.$val['num'];
+			}
+			unset($id_arr);
+			$sql = "SELECT cdkey,order_id,money,`status`,FROM_UNIXTIME(create_time) as time FROM pay_log WHERE id in ({$id_all}) ORDER BY create_time DESC";
 			$data ['data'] = $this->db->query ( $sql )->result_array ();
 			$data ['page_data'] = $this->pagination->create_links ();
 			$this->load->view ( 'search_records', $data );

@@ -100,6 +100,7 @@ form {
 			<option value='money' <?echo @$type=='money'?'selected':''; ?>>金额</option>
 			<option value='complate' <?echo @$type=='complate'?'selected':''; ?>>完成订单</option>
 			<option value='moon' <?echo @$type=='moon'?'selected':''; ?>>按月查询</option>
+			<option value='error' <?echo @$type=='error'?'selected':''; ?>>异常订单</option>
 		</select> <input type="text" name="search" /><br /> <input
 			type="submit" value="提交" />
 
