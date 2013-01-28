@@ -172,14 +172,18 @@ class Order_records extends CI_Controller {
 			) );
 			$data ['page'] = intval ( $this->uri->segment ( 3, 0 ) );
 			
-			$sql ="SELECT GROUP_CONCAT(id) as num FROM pay_log GROUP BY order_id having count(order_id) > 2";
-			$id_arr=$this->db->query ( $sql )->result_array ();
-			$id_all='-1';
-			foreach ($id_arr as $val){
-				$id_all.=','.$val['num'];
-			}
+// 			$sql ="SELECT GROUP_CONCAT(id) as num FROM pay_log GROUP BY order_id having count(order_id) > 2";
+// 			$id_arr=$this->db->query ( $sql )->result_array ();
+// 			$id_all='-1';
+// 			foreach ($id_arr as $val){
+// 				$id_all.=','.$val['num'];
+// 			}
+// 			unset($id_arr);
+			$sql="SELECT GROUP_CONCAT(t1.num) as num_all FROM (SELECT GROUP_CONCAT(t.id) as num FROM pay_log as t GROUP BY t.order_id HAVING count(t.order_id) > 2 ) t1";
+			$id_arr=$this->db->query ( $sql )->row_array ();
+			$id_all=$id_arr['num_all'];
 			unset($id_arr);
-			$sql = "SELECT cdkey,order_id,money,`status`,FROM_UNIXTIME(create_time) as time FROM pay_log WHERE id in ({$id_all}) ORDER BY create_time DESC";
+			$sql = "SELECT cdkey,order_id,money,`status`,FROM_UNIXTIME(create_time) as time FROM pay_log WHERE id in ({$id_all})ORDER BY create_time DESC";
 			$data ['data'] = $this->db->query ( $sql )->result_array ();
 			$data ['page_data'] = $this->pagination->create_links ();
 			$this->load->view ( 'search_records', $data );
@@ -229,14 +233,31 @@ class Order_records extends CI_Controller {
 			$data['moon_all']=0;
 			$data['date_cn']=$date_tmp['date_cn'];
 			$data ['data']=array();
+			$this->load->helper('date');				
+			$day_num=days_in_month(intval($date_tmp['m']),intval($date_tmp['Y']));
+			$day_arr=array();
+			$money_arr=array();
+			for($i=1;$i<=$day_num;$i++){
+				$day_arr[]=$date_tmp['m'].'-'.$i;
+				$money_arr[]=0;
+			}		
+				
 			foreach ( $tmp_data as $val){
 				$tmp_y=date('Y',$val['create_time']);
 				$tmp_m=date('m',$val['create_time']);
 				if($tmp_y == $date_tmp['Y'] and $tmp_m == $date_tmp['m'] && !$this->find_val($data ['data'],'order_id',$val['order_id'])){
 					$data ['data'][]=$val;
 					$data['moon_all']=$data['moon_all']+intval($val['money']);
+					$d_tmp=intval(date('d',$val['create_time'])-1);
+					$money_arr[$d_tmp]=$money_arr[$d_tmp]+intval($val['money']);
 				}
 			}
+			if(array_sum($money_arr)==0){
+				foreach ($money_arr as &$val){
+					$val=1;
+				}
+			}
+			$data['table']=$this->rectStat($data['date_cn'].'营业额柱形图',$day_arr,$money_arr,"V"); 
 			$data ['page_data'] = $this->pagination->create_links ();
 			$this->load->view ( 'search_records', $data );
 		} elseif ($data ['type'] == 'all' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'all')) {
@@ -306,6 +327,59 @@ class Order_records extends CI_Controller {
 			}
 		}
 		return $rs;
+	}
+	
+	/*
+	 * ◎功能：柱形统计图
+	* ◎参数：$statName 统计图的名称
+	*        $labelAry 统计项目标签数组
+	*        $dataAry  统计项目数据数组
+	*        $direct   统计图中柱形的方向，H为横向，V为纵向
+	* ◎返回：HTML代码
+	* ◎By Longware
+	*/
+	public function rectStat($statName,$labelAry,$dataAry,$direct="H")
+	{
+		$idx = 0;
+		$lenAry = array();
+		$sum = array_sum($dataAry);
+	
+		$strHTML  = "<table width='".(($direct=="H") ? "500" : "98%")."' border='0' cellspacing='1' cellpadding='1' bgcolor='#CCCCCC' align='center'>\n<tr><td bgcolor='#FFFFFF'>\n";
+		$strHTML .= "<table width='100%' border='0' cellspacing='2' cellpadding='2'>\n";
+	
+		if($direct=="H")//横向柱形统计图
+		{
+			$strHTML .= "<tr><td colspan='2' align='center'><b>".$statName."</b></td></tr>\n";
+	
+			while (list ($key, $val) = each ($dataAry))
+			{
+				$strHTML .= "<tr><td width='16%' align='right'>".$labelAry[$idx]."</td><td width='84%'><img src='../images/h_line2.gif' border=0 height='7' width='".(($val/$sum)*400)."'>&nbsp;".$dataAry[$idx]."</td></tr>\n";
+				$idx++;
+			}
+		}
+		elseif($direct=="V")//纵向柱形统计图
+		{
+			$dataHTML = "";
+			$labelHTML = "";
+	
+			while (list ($key, $val) = each ($dataAry))
+			{
+				$dataHTML .= "<td>".$dataAry[$idx]."<br><img src='../images/v_line2.gif' border=0 width='9' height='".(($val/$sum)*400)."'></td>\n";
+				$labelHTML .= "<td>".$labelAry[$idx]."</td>\n";
+				$idx++;
+			}
+	
+			$headHTML = "<tr align='center'><td colspan='".$idx."'><b>".$statName."</b></td></tr>\n<tr align='center' valign='bottom'>\n";
+			$bodyHTML = "</tr>\n<tr align='center'>\n";
+			$footHTML = "</tr>\n";
+	
+			$strHTML .= $headHTML.$dataHTML.$bodyHTML.$labelHTML.$footHTML;
+		}
+	
+		$strHTML .= "</table>\n";
+		$strHTML .= "</td></tr></table>\n";
+	
+		return $strHTML;
 	}
 }
 
