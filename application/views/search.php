@@ -8,10 +8,10 @@
 <title>order records</title>
 
 <link
-	href="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.css"
+	href="/pay_init/admin/statics/tablecloth/tablecloth.css"
 	rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript"
-	src="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
+	src="/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
 <!-- end -->
 
 <style>
@@ -91,14 +91,16 @@ form {
 
 <body>
 	<form
-		action="http://www.923ml.com/pay_init/admin/index.php/order_records/search_page"
-		method="post" style="text-align:center">
+		action="/pay_init/admin/index.php/order_records/search_page"
+		method="post" align="center">
 		<select name="type" >
+		
 		<option value='cdkey' <?echo @$type=='cdkey'?'selected':''; ?>>帐号</option>
 		<option value='order_id' <?echo @$type=='order_id'?'selected':''; ?>>订单号</option>	
 		<option value='money' <?echo @$type=='money'?'selected':''; ?>>金额</option>	
 		</select>
 		<input type="text" name="search" /><br />
+	
 		<input type="submit" value="提交"/>
 	
 	</form>

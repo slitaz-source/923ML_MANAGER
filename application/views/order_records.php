@@ -8,10 +8,10 @@
 <title>order records</title>
 
 <link
-	href="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.css"
+	href="/pay_init/admin/statics/tablecloth/tablecloth.css"
 	rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript"
-	src="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
+	src="/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
 <!-- end -->
 
 <style>

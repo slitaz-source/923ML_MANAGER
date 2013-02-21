@@ -8,10 +8,10 @@
 <title>order records</title>
 
 <link
-	href="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.css"
+	href="/pay_init/admin/statics/tablecloth/tablecloth.css"
 	rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript"
-	src="http://www.923ml.com/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
+	src="/pay_init/admin/statics/tablecloth/tablecloth.js"></script>
 <!-- end -->
 
 <style>
@@ -92,7 +92,7 @@ form {
 <body>
 <?php $type=isset($type) ? $type : ''?>
 <form
-		action="http://www.923ml.com/pay_init/admin/index.php/order_records/search_page"
+		action="/pay_init/admin/index.php/order_records/search_page"
 		method="post" style="text-align: center">
 		<select name="type">
 			<option value='cdkey' <?echo @$type=='cdkey'?'selected':''; ?>>帐号</option>

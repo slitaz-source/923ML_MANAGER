@@ -32,7 +32,7 @@ class Order_records extends CI_Controller {
 		}
 		
 		$this->load->library ( 'pagination' );
-		$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/page';
+		$config ['base_url'] = '/pay_init/admin/index.php/order_records/page';
 		$sql_conut = "SELECT COUNT(id) as num FROM pay_log";
 		$tmp = $this->db->query ( $sql_conut )->row_array ();
 		$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -55,7 +55,7 @@ class Order_records extends CI_Controller {
 			exit ();
 		}
 		$this->load->library ( 'pagination' );
-		$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/page';
+		$config ['base_url'] = '/pay_init/admin/index.php/order_records/page';
 		$sql_conut = "SELECT COUNT(id) as num FROM pay_log";
 		$tmp = $this->db->query ( $sql_conut )->row_array ();
 		$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -111,7 +111,7 @@ class Order_records extends CI_Controller {
 		}
 		if ($data ['type'] == 'cdkey' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'cdkey')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log where cdkey regexp '{$_POST['search']}'";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -129,7 +129,7 @@ class Order_records extends CI_Controller {
 			$this->load->view ( 'search_records', $data );
 		} elseif ($data ['type'] == 'order_id' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'order_id')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log where order_id regexp '{$_POST['search']}'";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -145,7 +145,7 @@ class Order_records extends CI_Controller {
 			$this->load->view ( 'search_records', $data );
 		} elseif ($data ['type'] == 'money' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'money')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log where money = '{$_POST['search']}'";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -161,7 +161,7 @@ class Order_records extends CI_Controller {
 			$this->load->view ( 'search_records', $data );
 		} elseif ($data ['type'] == 'error' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'error')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -189,7 +189,7 @@ class Order_records extends CI_Controller {
 			$this->load->view ( 'search_records', $data );
 		} elseif ($data ['type'] == 'complate' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'complate')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log WHERE status = 1 ";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -213,7 +213,7 @@ class Order_records extends CI_Controller {
 			}
 		} elseif ($data ['type'] == 'moon' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'moon')) {
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log WHERE status = 1 ";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
@@ -263,7 +263,7 @@ class Order_records extends CI_Controller {
 		} elseif ($data ['type'] == 'all' || (! isset ( $_POST ['type'] ) && $this->session->userdata ( 'search_type' ) == 'all')) {
 			
 			$this->load->library ( 'pagination' );
-			$config ['base_url'] = 'http://www.923ml.com/pay_init/admin/index.php/order_records/search_page';
+			$config ['base_url'] = '/pay_init/admin/index.php/order_records/search_page';
 			$sql_conut = "SELECT COUNT(id) as num FROM pay_log ";
 			$tmp = $this->db->query ( $sql_conut )->row_array ();
 			$config ['total_rows'] = intval ( $tmp ['num'] );
