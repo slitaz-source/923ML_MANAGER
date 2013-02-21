@@ -228,7 +228,7 @@ class CI_Pagination {
 		if  ($this->first_link !== FALSE AND $this->cur_page > ($this->num_links + 1))
 		{
 			$first_url = ($this->first_url == '') ? $this->base_url : $this->first_url;
-			$output .= $this->first_tag_open.'<a '.$this->anchor_class.'href="'.$first_url.'1.html">'.$this->first_link.'</a>'.$this->first_tag_close;
+			$output .= $this->first_tag_open.'<a '.$this->anchor_class.'href="'.$first_url.'0.html">'.$this->first_link.'</a>'.$this->first_tag_close;
 		}
 
 		// Render the "previous" link
@@ -245,11 +245,11 @@ class CI_Pagination {
 
 			if ($i == 0 && $this->first_url != '')
 			{
-				$output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'1.html">'.$this->prev_link.'</a>'.$this->prev_tag_close;
+				$output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'0.html">'.$this->prev_link.'</a>'.$this->prev_tag_close;
 			}
 			else
 			{
-				$i = ($i == 0) ? '1' : $this->prefix.$i.$this->suffix;
+				$i = ($i == 0) ? '0' : $this->prefix.$i.$this->suffix;
 				$output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$i.'.html">'.$this->prev_link.'</a>'.$this->prev_tag_close;
 			}
 
@@ -282,11 +282,11 @@ class CI_Pagination {
 
 						if ($n == '' && $this->first_url != '')
 						{
-							$output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'1.html">'.$loop.'</a>'.$this->num_tag_close;
+							$output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'0.html">'.$loop.'</a>'.$this->num_tag_close;
 						}
 						else
 						{
-							$n = ($n == '') ? '1' : $this->prefix.$n.$this->suffix;
+							$n = ($n == '') ? '0' : $this->prefix.$n.$this->suffix;
 
 							$output .= $this->num_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$n.'.html">'.$loop.'</a>'.$this->num_tag_close;
 						}
